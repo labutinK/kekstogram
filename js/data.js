@@ -1,5 +1,7 @@
 import { getRandomInt, generateUnicNumber } from './util.js';
 
+const NUM_OF_PHOTO_OBJECTS = 19;
+
 const COMMENT_MESSAGES = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
@@ -36,7 +38,7 @@ const CommentsUsersIdInterval = {
   max: 300,
 };
 const CommentsQuanityInterval = {
-  min: 5,
+  min: 1,
   max: 5,
 };
 
@@ -75,5 +77,6 @@ const createPhotoDataItems = (numOfObj) => {
 };
 
 
+const photoDataArray = createPhotoDataItems(NUM_OF_PHOTO_OBJECTS);
 
-export {createPhotoDataItems};
+export {photoDataArray};
