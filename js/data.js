@@ -21,6 +21,16 @@ const COMMENT_NAMES = [
   'Лиза',
   'Егор',
 ];
+const COMMENTS_DESCRIPTIONS= [
+  'случайно жмакнул и труляля',
+  'ж0оско вышло да?)',
+  'хорошее место чтобы выпить пЫва',
+  'ало?? это прачечная??',
+  'я вышел покурить на 17 лет',
+  'вернулся домой вместо дома трава',
+  'я взял до дома обратный билет',
+  'но трамвай не пришел. не придет никогда!(',
+];
 const LikesInterval = {
   min: 15,
   max: 200,
@@ -61,7 +71,7 @@ const createPhotoDataItems = (numOfObj) => {
     return {
       id : genereateUnicId(), // id уникальные (1 - 25) 
       url : `photos/${generateUnicUrl()}.jpg`, //k уникальные (1 - 25)
-      description : 'description',
+      description : COMMENTS_DESCRIPTIONS[getRandomInt(0,COMMENTS_DESCRIPTIONS.length - 1 )],
       likes : `${getRandomInt(LikesInterval.min, LikesInterval.max)}`, //j случайное число 15-200
       comments : new Array(getRandomInt(CommentsQuanityInterval.min, CommentsQuanityInterval.max)).fill(null).map(() => {
         return {

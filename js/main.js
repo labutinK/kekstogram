@@ -1,6 +1,6 @@
-import {generatedInstPictures} from './create-photos.js';
+import {generatePictures} from './create-preview-photos.js';
 
 
 
-
+generatePictures();
 

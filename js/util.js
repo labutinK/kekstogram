@@ -26,4 +26,8 @@ const generateUnicNumber = function(num1, num2){
   });
 }
 
-export {getRandomInt, checkLengthString, generateUnicNumber};
+const checkEscapeKey = function(evt){
+  return (evt.key === 'Escape' || evt.key === 'Esc');
+};
+
+export {getRandomInt, checkLengthString, generateUnicNumber, checkEscapeKey};
