@@ -4,14 +4,14 @@ const picturesBox = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content;
 const pictureItem = pictureTemplate.querySelector('.picture');
 
-const generateOnePicture = function({url, likes, comments, description}){
+const generateOnePicture = function(picture){
   const newItem = pictureItem.cloneNode(true);
-  newItem.querySelector('.picture__img').src = url;
-  newItem.querySelector('.picture__likes').textContent = likes;
-  newItem.querySelector('.picture__comments').textContent = comments.length;
+  newItem.querySelector('.picture__img').src = picture.url;
+  newItem.querySelector('.picture__likes').textContent = picture.likes;
+  newItem.querySelector('.picture__comments').textContent = picture.comments.length;
   newItem.addEventListener('click', function(evt){
     evt.preventDefault();
-    fillBigPicture({url, likes, comments, description});
+    fillBigPicture(picture);
   });
   return newItem;
 };
