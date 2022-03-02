@@ -4,6 +4,7 @@ const filterSlider = document.querySelector('.effect-level__slider');
 const filterSliderValue = document.querySelector('.effect-level__value');
 const filterWrapper = document.querySelector('.img-upload__effect-level');
 
+
 const EFFECTS_STYLES = {
   'none' : {
     name: 'none',
@@ -63,7 +64,7 @@ const chooseOriginalFilter = function() {
   prevPhoto.style.filter = 'none';
   filterSliderValue.value = '0';
   filterWrapper.style.display = 'none';
-  prevPhoto.style.filter = 'none';
+  document.querySelector('#effect-none').checked = true;
 };
 
 const changeSliderValue = function(values){
