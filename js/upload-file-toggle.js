@@ -12,6 +12,9 @@ const commentForm = document.querySelector('.text__description');
 const hashtag = document.querySelector('.text__hashtags');
 const uploadFormSubmit = document.querySelector('.img-upload__submit');
 
+const COMMENT_MAXLENGTH = 140;
+const HASHTAG_MAXLENGTH = 5;
+
 const resetSettings = function() {
   uploadFile.value = '';
   chooseOriginalFilter();
@@ -75,7 +78,7 @@ hashtag.addEventListener('keydown', (evt) => {
 
 commentForm.addEventListener('input', function() {
   let commentLength = this.value.length;
-  if(commentLength > 10){
+  if(commentLength > COMMENT_MAXLENGTH){
     this.setCustomValidity('Комментарий не может содержать более 140 симв.');
     this.classList.add('has-error');
   }
@@ -90,8 +93,8 @@ hashtag.addEventListener('input', function(){
   let hashtagValue = this.value.toLowerCase();
   let arraySplit = hashtagValue.trim().split(' ');
   let errorFlag;
-  errorFlag = arraySplit.find((val, ind) => {
-    if (ind > 4){
+  errorFlag = arraySplit.find((val, ind, arrayCurrent) => {
+    if (ind > HASHTAG_MAXLENGTH - 1){
       this.setCustomValidity('Можно добавить только 5 хештегов');
       return true;
     }
@@ -101,6 +104,10 @@ hashtag.addEventListener('input', function(){
     }
     else if(/[!@#$&*'")(></.,~`\]}|[{%]/.test(val.slice(1, val.length))){
       this.setCustomValidity('Хештеги не должны содержать специальных символов');
+      return true;
+    }
+    else if(arrayCurrent.indexOf(val) !== ind){
+      this.setCustomValidity('Хештеги не должны повторяться');
       return true;
     }
     else {
