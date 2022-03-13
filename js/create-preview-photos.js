@@ -1,8 +1,8 @@
-import {photoDataArray} from './data.js';
 import { fillBigPicture } from './create-full-photo.js';
 const picturesBox = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content;
 const pictureItem = pictureTemplate.querySelector('.picture');
+const PREV_PHOTO_COUNT = 12;
 
 const generateOnePicture = function(picture){
   const newItem = pictureItem.cloneNode(true);
@@ -16,9 +16,9 @@ const generateOnePicture = function(picture){
   return newItem;
 };
 
-const generatePictures = function(){
+const generatePictures = function(prevPhotos){
   const picturesFragment = document.createDocumentFragment();
-  photoDataArray.forEach(function(value){
+  prevPhotos.slice(0,PREV_PHOTO_COUNT).forEach(function(value){
     picturesFragment.appendChild(generateOnePicture(value));
   });
   picturesBox.appendChild(picturesFragment);
