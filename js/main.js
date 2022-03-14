@@ -5,6 +5,7 @@ import './scale.js';
 import './filters.js';
 import { showAlert } from './util.js';
 import {createFetch} from './get-data.js'; 
+import './feedback-form.js';
 
 const displayPrevPhotos = createFetch(generatePictures, showAlert);
 
