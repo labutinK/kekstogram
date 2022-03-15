@@ -1,5 +1,4 @@
 const ALERT_SHOW_TIME = 4000;
-const SUCCESS_MESSAGE_TIME = 5000;
 
 // функция генерации случайного числа из диапозона (включительно)
 const getRandomInt = function(num1, num2){
@@ -55,13 +54,6 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 }
 
-const showSuccesSendMessage = () => {
-  const successTemplate = document.querySelector('#success');
-  const successTemplateContent = successTemplate.content;
-  document.body.prepend(successTemplateContent);
-  setTimeout(() => {
-    successTemplateContent.remove();
-  }, SUCCESS_MESSAGE_TIME);
-}
 
-export {getRandomInt, checkLengthString, generateUnicNumber, checkEscapeKey, showAlert, showSuccesSendMessage};
+
+export {getRandomInt, checkLengthString, generateUnicNumber, checkEscapeKey, showAlert};

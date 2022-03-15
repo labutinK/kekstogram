@@ -12,6 +12,8 @@ const hashtag = document.querySelector('.text__hashtags');
 const resetFeedbackSettings = () => {
   hashtag.value = '';
   commentForm.value = '';
+  commentForm.disabled = false;
+  hashtag.disabled = false;
   hashtag.classList.remove('has-error');
   commentForm.classList.remove('has-error');
 }

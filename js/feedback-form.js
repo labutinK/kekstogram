@@ -1,11 +1,16 @@
-import {checkEscapeKey, showSuccesSendMessage } from './util.js';
+import {checkEscapeKey } from './util.js';
 import {uploadCansel} from './upload-file-toggle.js';
 /* eslint-disable no-mixed-spaces-and-tabs */
 const uploadForm = document.querySelector('#upload-select-image');
 const commentForm = document.querySelector('.text__description');
 const hashtag = document.querySelector('.text__hashtags');
 const uploadFormSubmit = document.querySelector('.img-upload__submit');
+const successTemplate = document.querySelector('#success');
+const errorTemplate = document.querySelector('#error');
 
+
+
+const body = document.querySelector('body');
 const COMMENT_MAXLENGTH = 140;
 const HASHTAG_MAXLENGTH = 5;
 
@@ -78,6 +83,12 @@ hashtag.addEventListener('input', function(){
 });
 
 uploadForm.addEventListener('input', uploadFormInputHandler);
+uploadFormSubmit.addEventListener('click', () => {
+  uploadFormSubmit.disabled = true;
+  commentForm.disabled = true;
+  hashtag.disabled = true;
+});
+
 
 const sendData = (onSuccess, onFail, body) => {
   fetch(
@@ -95,20 +106,73 @@ const sendData = (onSuccess, onFail, body) => {
       }
     })
     .catch(() => {
-      // onFail('Не удалось отправить форму. Попробуйте ещё раз');
+      onFail();
     });
 };
 
+const checkClickWhenSuccess = (evt) => {
+  if (checkEscapeKey(evt) ||
+  (!evt.target.classList.contains('.success__inner') && !evt.target.closest('.success__inner'))){
+    hideSuccessSendMessage();
+  }
+};
+const checkClickWhenError = (evt) => {
+  if (checkEscapeKey(evt) ||
+  (!evt.target.classList.contains('.error__inner') && !evt.target.closest('.error__inner'))){
+    hideErrorSendMessage();
+  }
+};
+
+const hideSuccessSendMessage = () => {
+  document.querySelector('.success').remove();
+  document.removeEventListener('keydown', checkClickWhenSuccess);
+  document.removeEventListener('click', checkClickWhenSuccess);
+  body.classList.remove('modal-open');
+}
+const hideErrorSendMessage = () => {
+  document.querySelector('.error').remove();
+  document.removeEventListener('keydown', checkClickWhenError);
+  document.removeEventListener('click', checkClickWhenError);
+  body.classList.remove('modal-open');
+}
+
+const showStatusSendMessage = (status) => {
+  if (status === 'success'){
+    const successTemplateClone = successTemplate.content.cloneNode(true);
+    document.body.prepend(successTemplateClone);
+    const successCloseBtn = document.querySelector('.success__button');
+    successCloseBtn.addEventListener('click', hideSuccessSendMessage);
+    document.addEventListener('keydown', checkClickWhenSuccess);
+    document.addEventListener('click', checkClickWhenSuccess);
+  }
+  else if (status === 'error'){
+    const errorTemplateClone = errorTemplate.content.cloneNode(true);
+    document.body.prepend(errorTemplateClone);
+    const errorCloseBtn = document.querySelector('.error__button');
+    errorCloseBtn.addEventListener('click', hideErrorSendMessage);
+    document.addEventListener('keydown', checkClickWhenError);
+    document.addEventListener('click', checkClickWhenError);
+  }
+  body.classList.add('modal-open');
+};
+
+
 const uploadSuccess = () => {
   uploadCansel();
-  showSuccesSendMessage();  
-}
+  showStatusSendMessage('success');
+};
+
+const uploadError = () => {
+  uploadCansel();
+  showStatusSendMessage('error');
+};
 
 const uploadFormSubmitHandler = (evt) => {
   evt.preventDefault();
+  evt.stopPropagation();
   sendData(
     uploadSuccess,
-    () => console.log('fail'),
+    uploadError,
     new FormData(uploadForm),
   );
 };
