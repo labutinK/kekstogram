@@ -54,6 +54,25 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 }
 
+const sendData = (onSuccess, onFail, body) => {
+  fetch(
+    'https://23.javascript.pages.academy/kekstagram',
+    {
+      method: 'POST',
+      body,
+    },
+  )
+    .then((response) => {
+      if (response.ok) {
+        onSuccess();
+      } else {
+        onFail();
+      }
+    })
+    .catch(() => {
+      onFail();
+    });
+};
 
 
-export {getRandomInt, checkLengthString, generateUnicNumber, checkEscapeKey, showAlert};
+export {getRandomInt, checkLengthString, generateUnicNumber, checkEscapeKey, showAlert, sendData};

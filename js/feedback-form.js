@@ -1,4 +1,4 @@
-import {checkEscapeKey } from './util.js';
+import {checkEscapeKey, sendData } from './util.js';
 import {uploadCansel} from './upload-file-toggle.js';
 /* eslint-disable no-mixed-spaces-and-tabs */
 const uploadForm = document.querySelector('#upload-select-image');
@@ -55,9 +55,10 @@ commentForm.addEventListener('input', function() {
 hashtag.addEventListener('input', function(){
   let hashtagValue = this.value.toLowerCase();
   let arraySplit = hashtagValue.trim().split(' ');
+  let arrayWithoutSpaces = arraySplit.filter(val => val !== '');
   let errorFlag;
-  errorFlag = arraySplit.find((val, ind, arrayCurrent) => {
-	  if (ind > HASHTAG_MAXLENGTH - 1){
+  errorFlag = arrayWithoutSpaces.find((val, ind, arrayCurrent) => {
+    if (ind > HASHTAG_MAXLENGTH - 1){
       this.setCustomValidity('Можно добавить только 5 хештегов');
       return true;
 	  }
@@ -65,6 +66,10 @@ hashtag.addEventListener('input', function(){
       this.setCustomValidity('Хештеги должны начинаться с "#"');
       return true;
 	  }
+    else if (val[1] === undefined){
+      this.setCustomValidity('Хештег не может быть пустым');
+      return true;
+    }
 	  else if(/[!@#$&*'")(></.,~`\]}|[{%]/.test(val.slice(1, val.length))){
       this.setCustomValidity('Хештеги не должны содержать специальных символов');
       return true;
@@ -78,8 +83,8 @@ hashtag.addEventListener('input', function(){
       return false;
 	  }
   });
-  (!errorFlag) ? this.classList.remove('has-error') : this.classList.add('has-error');
   this.reportValidity();
+  (!errorFlag) ? this.classList.remove('has-error') : this.classList.add('has-error');
 });
 
 uploadForm.addEventListener('input', uploadFormInputHandler);
@@ -88,27 +93,6 @@ uploadFormSubmit.addEventListener('click', () => {
   commentForm.disabled = true;
   hashtag.disabled = true;
 });
-
-
-const sendData = (onSuccess, onFail, body) => {
-  fetch(
-    'https://23.javascript.pages.academy/kekstagram',
-    {
-      method: 'POST',
-      body,
-    },
-  )
-    .then((response) => {
-      if (response.ok) {
-        onSuccess();
-      } else {
-        onFail();
-      }
-    })
-    .catch(() => {
-      onFail();
-    });
-};
 
 const checkClickWhenSuccess = (evt) => {
   if (checkEscapeKey(evt) ||
@@ -155,7 +139,6 @@ const showStatusSendMessage = (status) => {
   }
   body.classList.add('modal-open');
 };
-
 
 const uploadSuccess = () => {
   uploadCansel();
