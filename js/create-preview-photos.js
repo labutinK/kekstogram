@@ -9,8 +9,6 @@ const PhotosToShow = {
 }
 
 
-
-
 const generateOnePicture = function(picture){
   const newItem = pictureItem.cloneNode(true);
   newItem.querySelector('.picture__img').src = picture.url;
@@ -23,31 +21,35 @@ const generateOnePicture = function(picture){
   return newItem;
 };
 
-const generatePictures = function(prevPhotos){
-  const picturesFragment = document.createDocumentFragment();
-  prevPhotos.slice(0,PhotosToShow.default).forEach(function(value){
-    picturesFragment.appendChild(generateOnePicture(value));
-  });
-  clearPhotos();
-  picturesBox.appendChild(picturesFragment);
-}
-
 const clearPhotos = () => {
   document.querySelectorAll('.picture').forEach((el) => {
     el.remove();
   })
 };
 
-const generateRandomPictures = function(prevPhotos){
-  let generateUnicRandomPic = generateUnicNumber(0, prevPhotos.length - 1);
-  let prevPhotoClone = prevPhotos.slice();
+
+const generatePictures = function(prevPhotos){
   const picturesFragment = document.createDocumentFragment();
-  for(let i = 1; i <= PhotosToShow.rand; i++){
-    picturesFragment.appendChild(generateOnePicture(prevPhotoClone[generateUnicRandomPic()]));
+  let filter = document.querySelector('.img-filters__button--active').id;
+  if (filter === 'filter-default'){
+    prevPhotos.slice(0,PhotosToShow.default).forEach(function(value){
+      picturesFragment.appendChild(generateOnePicture(value));
+    });
+  }else if(filter === 'filter-random'){
+    for(let i = 1; i <= PhotosToShow.rand; i++){
+      let generateUnicRandomPic = generateUnicNumber(0, prevPhotos.length - 1);
+      let prevPhotoClone = prevPhotos.slice();
+      picturesFragment.appendChild(generateOnePicture(prevPhotoClone[generateUnicRandomPic()]));
+    }
+  }
+  else if (filter === 'filter-discussed'){
+    let prevPhotoClone = prevPhotos.slice();
+    prevPhotoClone.sort((a, b) => {return (b.comments.length - a.comments.length)}).slice(0,PhotosToShow.default).forEach(function(value){
+      picturesFragment.appendChild(generateOnePicture(value));
+    });
   }
   clearPhotos();
   picturesBox.appendChild(picturesFragment);
-};
+}
 
-
-export {generatePictures, generateRandomPictures};
+export {generatePictures};

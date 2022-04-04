@@ -1,6 +1,3 @@
-const randomFilter = document.querySelector('#filter-random');
-const discussedFilter = document.querySelector('#filter-discussed');
-const defaultFilter = document.querySelector('#filter-default');
 const pictureFilters = document.querySelector('.img-filters');
 const filterButtons = document.querySelectorAll('.img-filters__button');
 
@@ -18,22 +15,17 @@ const showFilters = () => {
   pictureFilters.classList.remove('img-filters--inactive');
 }
 
-const randomFilterClick = (cb) => {
-  randomFilter.addEventListener('click', (evt) => {
-    if(!evt.target.classList.contains('img-filters__button--active')){
-      photoFilterChange(evt);
-      cb();
-    }
-  });
+const filterClick = (cb) => {
+  filterButtons.forEach((el) => {
+    el.addEventListener('click', (evt) => {
+      if(!evt.target.classList.contains('img-filters__button--active')){
+        photoFilterChange(evt);
+        cb();
+      }
+    });
+  })
 }
-const defaultFilterClick = (cb) => {
-  defaultFilter.addEventListener('click', (evt) => {
-    if(!evt.target.classList.contains('img-filters__button--active')){
-      photoFilterChange(evt);
-      cb();
-    }
-  });
-}
+
   
 
-export {randomFilterClick, defaultFilterClick, showFilters};
+export {filterClick, showFilters};
