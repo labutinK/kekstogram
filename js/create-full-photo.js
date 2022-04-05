@@ -37,26 +37,27 @@ const onPopupEscKeydown = function(evt){
     closeFullPictureHandler();
   }
 };
-const renderComments = (comments) => {
+
+const renderComments = (comments, a, b) => {
   const commentFragment = document.createDocumentFragment();
-  comments.forEach(function(value){
+  comments.slice(a, b).forEach(function(value){
     const commentItem = constructCommentItem(value);
     commentFragment.appendChild(commentItem)
   });
-  pictureCommentsWrapper.innerHTML = '';
   pictureCommentsWrapper.appendChild(commentFragment);
 };
 
 
-const displayPrevComments = (commentsNum) => {
+const displayPrevComments = (comments) => {
   let displayedComments = 0;
-  let comCount = commentsNum;
-  if (commentsNum <= 5){
-    pictureBigCommentCountBoxActual.textContent = displayedComments + commentsNum;
+  let comCount = comments.length;
+  if (comments.length <= 5){
+    pictureBigCommentCountBoxActual.textContent = displayedComments + comments.length;
     pictureBigCommentsLoader.classList.add('hidden');
+    renderComments(comments, displayedComments, comments.length);
   }
   else {
-    displayedComments+=5;
+    renderComments(comments, displayedComments, displayedComments+=5);
     pictureBigCommentCountBoxActual.textContent = displayedComments;
   }
   return () => {
@@ -64,9 +65,10 @@ const displayPrevComments = (commentsNum) => {
     if (comCount <= 5){
       pictureBigCommentCountBoxActual.textContent = displayedComments + comCount;
       pictureBigCommentsLoader.classList.add('hidden');
+      renderComments(comments, displayedComments, comments.length);
     }
     else {
-      displayedComments+=5;
+      renderComments(comments, displayedComments, displayedComments+=5);
       pictureBigCommentCountBoxActual.textContent = displayedComments;
     }
   };
@@ -78,10 +80,10 @@ const fillBigPicture = function({url, likes, comments, description}){
   pictureBigLikes.textContent = likes;
   pictureCommentsCount.textContent = comments.length;
   pictureBigLabel.textContent = description;
-  renderComments(comments);
+  pictureCommentsWrapper.innerHTML = '';
   pictureBigCommentsLoader.classList.remove('hidden');
   pictureBigCommentsCountBox.textContent = comments.length;
-  const clickOnMoreButton = displayPrevComments(comments.length);
+  const clickOnMoreButton = displayPrevComments(comments);
   pictureBigCommentsLoader.onclick = clickOnMoreButton;
   pictureBig.classList.remove('hidden');
   document.querySelector('body').classList.add('modal-open');
