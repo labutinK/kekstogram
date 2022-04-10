@@ -1,9 +1,10 @@
+import * as noUiSlider from 'nouislider';
+import 'nouislider/dist/nouislider.css';
 const filters = document.querySelectorAll('.effects__radio');
 const prevPhoto = document.querySelector('.img-upload__preview img');
 const filterSlider = document.querySelector('.effect-level__slider');
 const filterSliderValue = document.querySelector('.effect-level__value');
 const filterWrapper = document.querySelector('.img-upload__effect-level');
-
 
 const EFFECTS_STYLES = {
   'none' : {

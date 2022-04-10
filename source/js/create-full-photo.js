@@ -51,6 +51,9 @@ const renderComments = (comments, a, b) => {
 const displayPrevComments = (comments) => {
   let displayedComments = 0;
   let comCount = comments.length;
+  pictureBigCommentsCountBox.textContent = comments.length;
+  pictureCommentsWrapper.innerHTML = '';
+  pictureBigCommentsLoader.classList.remove('hidden');
   if (comments.length <= 5){
     pictureBigCommentCountBoxActual.textContent = displayedComments + comments.length;
     pictureBigCommentsLoader.classList.add('hidden');
@@ -80,9 +83,6 @@ const fillBigPicture = function({url, likes, comments, description}){
   pictureBigLikes.textContent = likes;
   pictureCommentsCount.textContent = comments.length;
   pictureBigLabel.textContent = description;
-  pictureCommentsWrapper.innerHTML = '';
-  pictureBigCommentsLoader.classList.remove('hidden');
-  pictureBigCommentsCountBox.textContent = comments.length;
   const clickOnMoreButton = displayPrevComments(comments);
   pictureBigCommentsLoader.onclick = clickOnMoreButton;
   pictureBig.classList.remove('hidden');

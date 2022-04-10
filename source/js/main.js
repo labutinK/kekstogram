@@ -1,4 +1,5 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
+var _ = require('lodash');
 import { generatePictures } from './create-preview-photos.js';
 import './upload-file-toggle.js';
 import './scale.js';

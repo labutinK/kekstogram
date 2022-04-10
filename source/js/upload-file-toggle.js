@@ -8,6 +8,8 @@ const uploadWrapperCancel = document.querySelector('#upload-cancel');
 const body = document.querySelector('body');
 const commentForm = document.querySelector('.text__description');
 const hashtag = document.querySelector('.text__hashtags');
+const previewBoxes = document.querySelectorAll('.effects__preview');
+const uploadPhotoBox = document.querySelector('.img-upload__preview img');
 
 const resetFeedbackSettings = () => {
   hashtag.value = '';
@@ -48,9 +50,29 @@ const uploadOpen = function(){
   document.addEventListener('keydown',onUploadWrapperCancel);
 };
 
+const FILE_TYPES = ['jpeg', 'png', 'jpg'];
+
 uploadFile.addEventListener('change', function () {
   uploadOpen();
   chooseOriginalFilter();
+  const file = uploadFile.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => {
+    return fileName.endsWith(it);
+  });
+     
+  if (matches) {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => {
+      uploadPhotoBox.src = reader.result;
+      uploadPhotoBox.width = 600;
+      uploadPhotoBox.height  = 600;
+      previewBoxes.forEach((el) => {
+        el.style.backgroundImage = `url('${reader.result}')`;
+      })
+    });
+    reader.readAsDataURL(file);
+  }
 });
 
 
