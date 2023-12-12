@@ -1,4 +1,4 @@
-import { checkEscapeKey } from './util.js';
+import {checkEscapeKey} from './util.js';
 import {chooseOriginalFilter} from './filters.js';
 import {uploadPrevPhotoResize} from './scale.js';
 
@@ -20,34 +20,34 @@ const resetFeedbackSettings = () => {
   commentForm.classList.remove('has-error');
 }
 
-const resetSettings = function() {
+const resetSettings = function () {
   uploadFile.value = '';
   chooseOriginalFilter();
   uploadPrevPhotoResize('100');
   resetFeedbackSettings();
 };
 
-const uploadCansel = function(){
+const uploadCansel = function () {
   uploadWrapper.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onUploadWrapperCancel);
   resetSettings();
 }
 
-uploadWrapperCancel.addEventListener('click', function(){
+uploadWrapperCancel.addEventListener('click', function () {
   uploadCansel();
 });
 
-const onUploadWrapperCancel = function(evt){
-  if(checkEscapeKey(evt)){
+const onUploadWrapperCancel = function (evt) {
+  if (checkEscapeKey(evt)) {
     uploadCansel();
   }
 }
 
-const uploadOpen = function(){
+const uploadOpen = function () {
   uploadWrapper.classList.remove('hidden');
   body.classList.add('modal-open');
-  document.addEventListener('keydown',onUploadWrapperCancel);
+  document.addEventListener('keydown', onUploadWrapperCancel);
 };
 
 const FILE_TYPES = ['jpeg', 'png', 'jpg'];
@@ -60,13 +60,13 @@ uploadFile.addEventListener('change', function () {
   const matches = FILE_TYPES.some((it) => {
     return fileName.endsWith(it);
   });
-     
+
   if (matches) {
     const reader = new FileReader();
     reader.addEventListener('load', () => {
       uploadPhotoBox.src = reader.result;
       uploadPhotoBox.width = 600;
-      uploadPhotoBox.height  = 600;
+      uploadPhotoBox.height = 600;
       previewBoxes.forEach((el) => {
         el.style.backgroundImage = `url('${reader.result}')`;
       })

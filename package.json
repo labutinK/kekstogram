@@ -33,7 +33,7 @@
     "watch:webpack": "webpack --watch --mode development",
     "watch:sync": "browser-sync start --server 'build/' --no-ui --files 'build/**/*.*'",
     "build": "webpack --mode production",
-    "test": "eslint js/"
+    "test": "eslint source/js/"
   },
   "engines": {
     "node": ">=12.0.0"

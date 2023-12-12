@@ -1,4 +1,5 @@
-import { checkEscapeKey } from './util.js';
+import {checkEscapeKey} from './util.js';
+
 const pictureBig = document.querySelector('.big-picture');
 const pictureBigSrc = pictureBig.querySelector('.big-picture__img img');
 const pictureBigLikes = pictureBig.querySelector('.likes-count');
@@ -13,7 +14,7 @@ const pictureBigCommentCountBoxActual = pictureBigCommentsCount.querySelector('.
 const pictureBigCommentsLoader = pictureBig.querySelector('.comments-loader');
 
 
-const constructCommentItem = function(comment){
+const constructCommentItem = function (comment) {
   const newComment = bigPictureComment.cloneNode(true);
   const newCommentImg = newComment.querySelector('.social__picture');
   const newCommentMessage = newComment.querySelector('.social__text');
@@ -23,7 +24,7 @@ const constructCommentItem = function(comment){
   return newComment;
 };
 
-const closeFullPictureHandler = function(){
+const closeFullPictureHandler = function () {
   pictureBig.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
   document.removeEventListener('keydown', onPopupEscKeydown);
@@ -33,15 +34,15 @@ pictureBigClose.addEventListener('click', () => {
   closeFullPictureHandler();
 });
 
-const onPopupEscKeydown = function(evt){
-  if(checkEscapeKey(evt)){
+const onPopupEscKeydown = function (evt) {
+  if (checkEscapeKey(evt)) {
     closeFullPictureHandler();
   }
 };
 
 const renderComments = (comments, a, b) => {
   const commentFragment = document.createDocumentFragment();
-  comments.slice(a, b).forEach(function(value){
+  comments.slice(a, b).forEach(function (value) {
     const commentItem = constructCommentItem(value);
     commentFragment.appendChild(commentItem)
   });
@@ -55,32 +56,30 @@ const displayPrevComments = (comments) => {
   pictureBigCommentsCountBox.textContent = comments.length;
   pictureCommentsWrapper.innerHTML = '';
   pictureBigCommentsLoader.classList.remove('hidden');
-  if (comments.length <= 5){
+  if (comments.length <= 5) {
     pictureBigCommentCountBoxActual.textContent = displayedComments + comments.length;
     pictureBigCommentsLoader.classList.add('hidden');
     renderComments(comments, displayedComments, comments.length);
-  }
-  else {
-    renderComments(comments, displayedComments, displayedComments+=5);
+  } else {
+    renderComments(comments, displayedComments, displayedComments += 5);
     pictureBigCommentCountBoxActual.textContent = displayedComments;
   }
   return () => {
-    comCount-=5;
-    if (comCount <= 5){
+    comCount -= 5;
+    if (comCount <= 5) {
       pictureBigCommentCountBoxActual.textContent = displayedComments + comCount;
       pictureBigCommentsLoader.classList.add('hidden');
       renderComments(comments, displayedComments, comments.length);
-    }
-    else {
-      renderComments(comments, displayedComments, displayedComments+=5);
+    } else {
+      renderComments(comments, displayedComments, displayedComments += 5);
       pictureBigCommentCountBoxActual.textContent = displayedComments;
     }
   };
 }
 
 
-const fillBigPicture = function({url, likes, comments, description}){
-  pictureBigSrc.src  = url;
+const fillBigPicture = function ({url, likes, comments, description}) {
+  pictureBigSrc.src = url;
   pictureBigLikes.textContent = likes;
   pictureCommentsCount.textContent = comments.length;
   pictureBigLabel.textContent = description;

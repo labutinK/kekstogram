@@ -3,7 +3,7 @@ const filterButtons = document.querySelectorAll('.img-filters__button');
 
 const photoFilterChange = (evt) => {
   Array.from(filterButtons).some((el) => {
-    if(el.classList.contains('img-filters__button--active')){
+    if (el.classList.contains('img-filters__button--active')) {
       el.classList.remove('img-filters__button--active');
       return true;
     }
@@ -18,7 +18,7 @@ const showFilters = () => {
 const filterClick = (cb) => {
   filterButtons.forEach((el) => {
     el.addEventListener('click', (evt) => {
-      if(!evt.target.classList.contains('img-filters__button--active')){
+      if (!evt.target.classList.contains('img-filters__button--active')) {
         photoFilterChange(evt);
         cb();
       }
@@ -26,6 +26,5 @@ const filterClick = (cb) => {
   })
 }
 
-  
 
 export {filterClick, showFilters};

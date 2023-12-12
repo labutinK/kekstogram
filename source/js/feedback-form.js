@@ -80,14 +80,12 @@ hashtag.addEventListener('input', function () {
 
 
 const checkClickWhenSuccess = (evt) => {
-  if (checkEscapeKey(evt) ||
-    (!evt.target.classList.contains('.success__inner') && !evt.target.closest('.success__inner'))) {
+  if (checkEscapeKey(evt) || (!evt.target.classList.contains('.success__inner') && !evt.target.closest('.success__inner'))) {
     hideSuccessSendMessage();
   }
 };
 const checkClickWhenError = (evt) => {
-  if (checkEscapeKey(evt) ||
-    (!evt.target.classList.contains('.error__inner') && !evt.target.closest('.error__inner'))) {
+  if (checkEscapeKey(evt) || (!evt.target.classList.contains('.error__inner') && !evt.target.closest('.error__inner'))) {
     hideErrorSendMessage();
   }
 };
@@ -140,11 +138,7 @@ const uploadFormSubmitHandler = (evt) => {
   hashtag.disabled = true;
   evt.preventDefault();
   evt.stopPropagation();
-  sendData(
-    uploadSuccess,
-    uploadError,
-    new FormData(uploadForm),
-  );
+  sendData(uploadSuccess, uploadError, new FormData(uploadForm));
 };
 
 uploadForm.addEventListener('input', uploadFormInputHandler);
