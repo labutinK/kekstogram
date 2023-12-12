@@ -8,7 +8,7 @@ const getRandomInt = function(num1, num2){
   }
   return num2 + Math.floor(Math.random() * (num1 - num2 + 1));
 };
-  
+
 // функция для проверки строки на макс длину (true - проходит, false - не проходит)
 const checkLengthString = function(str, maxLength){
   return (str.length <= maxLength);
@@ -45,9 +45,9 @@ const showAlert = (message) => {
   alertContainer.style.fontSize = '30px';
   alertContainer.style.textAlign = 'center';
   alertContainer.style.backgroundColor = 'red';
-  
+
   alertContainer.textContent = message;
-  
+
   document.body.append(alertContainer);
   setTimeout(() => {
     alertContainer.remove();

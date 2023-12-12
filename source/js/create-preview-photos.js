@@ -5,9 +5,8 @@ const pictureTemplate = document.querySelector('#picture').content;
 const pictureItem = pictureTemplate.querySelector('.picture');
 const PhotosToShow = {
   default : 12,
-  rand : 10,
+  rand : 12,
 }
-
 
 const generateOnePicture = function(picture){
   const newItem = pictureItem.cloneNode(true);
@@ -36,8 +35,8 @@ const generatePictures = function(prevPhotos){
       picturesFragment.appendChild(generateOnePicture(value));
     });
   }else if(filter === 'filter-random'){
+    let generateUnicRandomPic = generateUnicNumber(0, prevPhotos.length - 1);
     for(let i = 1; i <= PhotosToShow.rand; i++){
-      let generateUnicRandomPic = generateUnicNumber(0, prevPhotos.length - 1);
       let prevPhotoClone = prevPhotos.slice();
       picturesFragment.appendChild(generateOnePicture(prevPhotoClone[generateUnicRandomPic()]));
     }

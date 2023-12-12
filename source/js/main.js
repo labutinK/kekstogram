@@ -5,7 +5,7 @@ import './upload-file-toggle.js';
 import './scale.js';
 import './filters.js';
 import {showAlert} from './util.js';
-import {createFetch} from './get-data.js'; 
+import {createFetch} from './get-data.js';
 import './feedback-form.js';
 import {filterClick, showFilters } from './sort-filters.js';
 
@@ -14,6 +14,7 @@ const displayPrevPhotos = createFetch((photos) => {
   showFilters();
   filterClick(_.debounce(() => {generatePictures(photos)}, 500));
 }, showAlert);
+
 
 displayPrevPhotos();
 

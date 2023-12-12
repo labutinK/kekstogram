@@ -12,6 +12,7 @@ const pictureBigCommentsCountBox = pictureBigCommentsCount.querySelector('.comme
 const pictureBigCommentCountBoxActual = pictureBigCommentsCount.querySelector('.comments-actual');
 const pictureBigCommentsLoader = pictureBig.querySelector('.comments-loader');
 
+
 const constructCommentItem = function(comment){
   const newComment = bigPictureComment.cloneNode(true);
   const newCommentImg = newComment.querySelector('.social__picture');
